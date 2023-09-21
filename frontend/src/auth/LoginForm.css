@@ -1,0 +1,46 @@
+/* LogInForm.css */
+
+.login-card {
+  background-color: #ffffff;
+  border-radius: 10px;
+  border: solid rgba(39, 35, 33, 0.192) 0.5px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.295);
+  width: 320px;
+  margin: 0 auto;
+  margin-top: 20px;
+  padding: 20px;
+  text-align: center;
+  font-family: Arial, sans-serif;
+}
+
+.login-card h2 {
+  color: #333;
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+
+.login-card input {
+  width: 80%;
+  padding: 2px;
+  margin: 8px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  height: 25px;
+}
+
+.login-card button {
+  background-color: #438b49;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 10px;
+}
+
+.login-card button:hover {
+  background-color: #70dd5a;
+}
