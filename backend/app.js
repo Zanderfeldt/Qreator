@@ -9,6 +9,7 @@ const { NotFoundError } = require("./expressError");
 const { authenticateJWT } = require("./middleware/auth");
 const authRoutes = require("./routes/auth");
 const usersRoutes = require("./routes/users");
+const codeDesignRoutes = require("./routes/codeDesign");
 // ///////////////////// require routes here
 
 
@@ -23,7 +24,7 @@ app.use(authenticateJWT);
 
 app.use("/auth", authRoutes);
 app.use("/users", usersRoutes);
-
+app.use("/create", codeDesignRoutes);
 /** Handle 404 errors -- this matches everything */
 app.use(function (req, res, next) {
   return next(new NotFoundError());

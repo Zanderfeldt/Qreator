@@ -109,7 +109,7 @@ class User {
 
     const user = userRes.rows[0];
 
-    if (!user) throw new NotFoundError(`No user: ${username}`);
+    if (!user) throw new NotFoundError(`No user: ${userId}`);
     
     const userCodesRes = await db.query(
       `SELECT q.id
@@ -119,6 +119,53 @@ class User {
     user.codes = userCodesRes.rows.map(q => q.id);
     return user;
   }
+
+  //Method for retrieving all QR Codes belonging to single user
+  static async getUserCodes(userId) {
+    const codeRes = await db.query(
+        `SELECT id,
+                link,
+                format,
+                margin,
+                size,
+                code_color AS "codeColor",
+                bg_color AS "bgColor",
+                img,
+                img_ratio AS "imgRatio",
+                description,
+                last_edited AS "lastEdited",
+                url
+          FROM qr_codes
+          WHERE user_id = $1`, [userId]);
+
+    const codes = codeRes.rows;
+
+    if (!codes) throw new NotFoundError(`No QR Codes yet`);
+
+    return codes;
+  }
+
+  //Method for retrieving single QR Code belonging to user
+  static async getUserCode(codeId) {
+    const codeRes = await db.query(
+        `SELECT id,
+                link,
+                format,
+                margin,
+                size,
+                code_color AS "codeColor",
+                bg_color AS "bgColor",
+                img,
+                img_ratio AS "imgRatio",
+                description,
+                last_edited AS "lastEdited",
+                url
+        FROM qr_codes
+        where id = $1`, [codeId]);
+    
+    return codeRes.rows[0];
+  }
+
 
 
   /** Update user data with `data`.

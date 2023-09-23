@@ -1,0 +1,92 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema#",
+  "$id": "http://example.com/example.json",
+  "type": "object",
+  "default": {},
+  "title": "Root Schema",
+  "required": [
+      "link",
+      "margin",
+      "size",
+      "codeColor",
+      "bgColor",
+      "description"
+  ],
+  "properties": {
+      "link": {
+          "type": "string",
+          "default": "",
+          "title": "The link Schema",
+          "examples": [
+              "hello world"
+          ]
+      },
+      "margin": {
+          "type": "integer",
+          "default": 0,
+          "title": "The margin Schema",
+          "examples": [
+              4
+          ]
+      },
+      "size": {
+          "type": "integer",
+          "default": 0,
+          "title": "The size Schema",
+          "examples": [
+              20
+          ]
+      },
+      "codeColor": {
+          "type": "string",
+          "default": "",
+          "title": "The codeColor Schema",
+          "examples": [
+              "000000"
+          ]
+      },
+      "bgColor": {
+          "type": "string",
+          "default": "",
+          "title": "The bgColor Schema",
+          "examples": [
+              "ffffff"
+          ]
+      },
+      "img": {
+          "type": "string",
+          "default": "",
+          "title": "The img Schema",
+          "examples": [
+              "https://cdn-icons-png.flaticon.com/512/1389/1389234.png"
+          ]
+      },
+      "imgRatio": {
+          "type": "number",
+          "default": 0.0,
+          "title": "The imgRatio Schema",
+          "examples": [
+              0.3
+          ]
+      },
+      "description": {
+          "type": "string",
+          "default": "",
+          "title": "The description Schema",
+          "examples": [
+              "blablabla"
+          ]
+      }
+  },
+  "examples": [{
+      "link": "hello world",
+      "format": "png",
+      "margin": 4,
+      "size": 20,
+      "codeColor": "000000",
+      "bgColor": "ffffff",
+      "img": "https://cdn-icons-png.flaticon.com/512/1389/1389234.png",
+      "imgRatio": 0.3,
+      "description": "blablabla"
+  }]
+}
