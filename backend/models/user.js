@@ -8,7 +8,7 @@ const {
   BadRequestError,
   UnauthorizedError,
 } = require("../expressError");
-
+const { sqlForPartialUpdate } = require("../helpers/sql");
 const { BCRYPT_WORK_FACTOR } = require("../config.js");
 
 /** Related functions for users. */
@@ -95,6 +95,7 @@ class User {
     return user;
   }
 
+  //Method for getting a single User's info
   static async get(userId) {
     const userRes = await db.query(
           `SELECT id,
@@ -123,18 +124,9 @@ class User {
   //Method for retrieving all QR Codes belonging to single user
   static async getUserCodes(userId) {
     const codeRes = await db.query(
-        `SELECT id,
-                link,
-                format,
-                margin,
-                size,
-                code_color AS "codeColor",
-                bg_color AS "bgColor",
-                img,
-                img_ratio AS "imgRatio",
-                description,
-                last_edited AS "lastEdited",
-                url
+        `SELECT description,
+                url,
+                last_edited as "lastEdited"
           FROM qr_codes
           WHERE user_id = $1`, [userId]);
 
@@ -148,90 +140,61 @@ class User {
   //Method for retrieving single QR Code belonging to user
   static async getUserCode(codeId) {
     const codeRes = await db.query(
-        `SELECT id,
-                link,
-                format,
-                margin,
-                size,
-                code_color AS "codeColor",
-                bg_color AS "bgColor",
-                img,
-                img_ratio AS "imgRatio",
-                description,
-                last_edited AS "lastEdited",
-                url
+        `SELECT description,
+                url,
+                last_edited AS "lastEdited
         FROM qr_codes
         where id = $1`, [codeId]);
     
     return codeRes.rows[0];
   }
 
+  static async addNewCode({userId, description, lastEdited, url}) {
+    const result = await db.query(
+        `INSERT INTO qr_codes
+        (user_id, description, last_edited, url)
+        VALUES ($1, $2, $3, $4)
+        RETURNING id, description, last_edited AS "lastEdited"`,
+        [
+          userId,
+          description,
+          lastEdited,
+          url
+        ]
+    );
+    const code = result.rows[0];
 
+    return code;
+  }
 
-  /** Update user data with `data`.
-   *
-   * This is a "partial update" --- it's fine if data doesn't contain
-   * all the fields; this only changes provided ones.
-   *
-   * Data can include:
-   *   { firstName, lastName, password, email, isAdmin }
-   *
-   * Returns { username, firstName, lastName, email, isAdmin }
-   *
-   * Throws NotFoundError if not found.
-   *
-   * WARNING: this function can set a new password or make a user an admin.
-   * Callers of this function must be certain they have validated inputs to this
-   * or a serious security risks are opened.
-   */
+  //Method for updating a single QR Code
+  static async updateCode(codeId, data) {
+    const { setCols, values } = sqlForPartialUpdate(
+        {lastEdited:  new Date().toLocaleDateString("en-US"), ...data}, 
+        {lastEdited: "last_edited"});
+    const idVarIdx = "$" + (values.length + 1);
 
-  // static async update(username, data) {
-  //   if (data.password) {
-  //     data.password = await bcrypt.hash(data.password, BCRYPT_WORK_FACTOR);
-  //   }
+    const querySql = `UPDATE qr_codes
+                      SET ${setCols}
+                      WHERE id = ${idVarIdx}
+                      RETURNING id, description, url, last_edited AS "lastEdited"`;
+    const result = await db.query(querySql, [...values, codeId]);
+    const code = result.rows[0];
 
-  //   const { setCols, values } = sqlForPartialUpdate(
-  //       data,
-  //       {
-  //         firstName: "first_name",
-  //         lastName: "last_name",
-  //         isAdmin: "is_admin",
-  //       });
-  //   const usernameVarIdx = "$" + (values.length + 1);
+    return code;
+  }
 
-  //   const querySql = `UPDATE users 
-  //                     SET ${setCols} 
-  //                     WHERE username = ${usernameVarIdx} 
-  //                     RETURNING username,
-  //                               first_name AS "firstName",
-  //                               last_name AS "lastName",
-  //                               email,
-  //                               is_admin AS "isAdmin"`;
-  //   const result = await db.query(querySql, [...values, username]);
-  //   const user = result.rows[0];
+  //Method for deleting a single QR Code
+  static async deleteUserCode(codeId) {
+    const result = await db.query(
+        `DELETE
+        FROM qr_codes
+        WHERE id = $1
+        RETURNING id`, [codeId]);
+    const code = result.rows[0];
 
-  //   if (!user) throw new NotFoundError(`No user: ${username}`);
-
-  //   delete user.password;
-  //   return user;
-  // }
-
-  // /** Delete given user from database; returns undefined. */
-
-  // static async remove(username) {
-  //   let result = await db.query(
-  //         `DELETE
-  //          FROM users
-  //          WHERE username = $1
-  //          RETURNING username`,
-  //       [username],
-  //   );
-  //   const user = result.rows[0];
-
-  //   if (!user) throw new NotFoundError(`No user: ${username}`);
-  // }
-
+    if (!code) throw new NotFoundError(`No QR Code: ${codeId}`);
+  }  
 }
-
 
 module.exports = User;

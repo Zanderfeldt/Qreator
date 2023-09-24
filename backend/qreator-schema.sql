@@ -20,6 +20,6 @@ CREATE TABLE qr_codes (
   -- img VARCHAR,
   -- img_ratio NUMERIC CHECK (img_ratio <= 1.0),
   description VARCHAR(50),
-  last_edited DATE NOT NULL,
+  last_edited VARCHAR NOT NULL,
   url VARCHAR
 );
