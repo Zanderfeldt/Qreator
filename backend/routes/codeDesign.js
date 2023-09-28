@@ -10,6 +10,8 @@ const { BadRequestError } = require("../expressError");
 const axios = require('axios');
 const { ensureCorrectUser, ensureLoggedIn } = require("../middleware/auth");
 const router = new express.Router();
+const { objectToQueryString } = require("../helpers/objToQueryString");
+
 
 router.post("/", ensureLoggedIn, async function (req, res, next) {
   try {
@@ -19,16 +21,18 @@ router.post("/", ensureLoggedIn, async function (req, res, next) {
       throw new BadRequestError(errs);
     }
 
-    const linkText = encodeURIComponent(req.body.link);
+    
 
-    let url;
-    if (req.body.img) {
-      const img = encodeURIComponent(req.body.img);
-      url = `https://quickchart.io/qr?text=${linkText}&centerImageUrl=${img}&centerImageSizeRatio=${req.body.imgRatio}&dark=${req.body.codeColor}&light=${req.body.bgColor}&margin=${req.body.margin}&size=${req.body.size}&ecLevel=H`
-    } else {
-      url = `https://quickchart.io/qr?text=${linkText}&dark=${req.body.codeColor}&light=${req.body.bgColor}&margin=${req.body.margin}&size=${req.body.size}&ecLevel=H`
-    }
-    const response = await axios.get(url, {
+    let BASE_URL = "https://quickchart.io/qr?";
+    let qString = objectToQueryString(req.body);
+    let fullUrl = BASE_URL+qString;
+    // if (req.body.img) {
+    //   const img = encodeURIComponent(req.body.img);
+    //   url = `https://quickchart.io/qr?text=${linkText}&centerImageUrl=${img}&centerImageSizeRatio=${req.body.imgRatio}&dark=${req.body.codeColor}&light=${req.body.bgColor}&margin=${req.body.margin}&size=${req.body.size}&ecLevel=H`
+    // } else {
+    //   url = `https://quickchart.io/qr?text=${linkText}&dark=${req.body.codeColor}&light=${req.body.bgColor}&margin=${req.body.margin}&size=${req.body.size}&ecLevel=H`
+    // }
+    const response = await axios.get(fullUrl, {
       responseType: 'arraybuffer', // Ensure binary response
     });
     res.setHeader('Content-Type', 'image/png'); // Set the response content type

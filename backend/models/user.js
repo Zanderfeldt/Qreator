@@ -121,10 +121,42 @@ class User {
     return user;
   }
 
+  // Method for updating user data
+  static async updateUser(userId, data) {
+    if (data.password) {
+      delete data.password;
+    }
+
+    const { setCols, values } = sqlForPartialUpdate(
+      data,
+      {
+        firstName: "first_name",
+        lastName: "last_name"
+      });
+      const userVarIdx = "$" + (values.length + 1);
+
+      const querySql = `UPDATE users
+                        SET ${setCols}
+                        WHERE id = ${userVarIdx}
+                        RETURNING id,
+                                  username,
+                                  first_name AS "firstName",
+                                  last_name AS "lastName",
+                                  email`;
+      const result = await db.query(querySql, [...values, userId]);
+      const user = result.rows[0];
+
+      if (!user) throw new NotFoundError(`No user with ID: ${userId}`);
+
+      delete user.password;
+      return user;
+  }
+
   //Method for retrieving all QR Codes belonging to single user
   static async getUserCodes(userId) {
     const codeRes = await db.query(
-        `SELECT description,
+        `SELECT id,
+                description,
                 url,
                 last_edited as "lastEdited"
           FROM qr_codes
@@ -140,11 +172,13 @@ class User {
   //Method for retrieving single QR Code belonging to user
   static async getUserCode(codeId) {
     const codeRes = await db.query(
-        `SELECT description,
+        `SELECT id,
+                description,
                 url,
-                last_edited AS "lastEdited
+                last_edited AS "lastEdited"
         FROM qr_codes
-        where id = $1`, [codeId]);
+        WHERE id = $1
+        ORDER BY TO_DATE(last_edited, 'MM/DD/YYYY') DESC`, [codeId]);
     
     return codeRes.rows[0];
   }
@@ -194,7 +228,33 @@ class User {
     const code = result.rows[0];
 
     if (!code) throw new NotFoundError(`No QR Code: ${codeId}`);
-  }  
+  }
+  
+  //Simple method for checking password (Used when users want to make changes to Profile info)
+  static async passwordCheck(userId, password) {
+     // try to find the user first
+     const result = await db.query(
+      `SELECT username,
+              password,
+              first_name AS "firstName",
+              last_name AS "lastName",
+              email
+       FROM users
+       WHERE id = $1`,
+    [userId],
+);
+    const user = result.rows[0];
+
+    if (user) {
+      // compare hashed password to a new hash from password
+      const isValid = await bcrypt.compare(password, user.password);
+      if (isValid === true) {
+        delete user.password;
+         return user;
+      }
+    }
+    throw new UnauthorizedError("Invalid username/password");
+  }
 }
 
 module.exports = User;

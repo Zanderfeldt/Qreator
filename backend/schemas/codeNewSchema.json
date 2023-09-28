@@ -5,15 +5,15 @@
   "default": {},
   "title": "Root Schema",
   "required": [
-      "link",
+      "text",
       "margin",
       "size",
-      "codeColor",
-      "bgColor",
+      "dark",
+      "light",
       "description"
   ],
   "properties": {
-      "link": {
+      "text": {
           "type": "string",
           "default": "",
           "title": "The link Schema",
@@ -22,7 +22,7 @@
           ]
       },
       "margin": {
-          "type": "integer",
+          "type": ["string", "number", "integer"],
           "default": 0,
           "title": "The margin Schema",
           "examples": [
@@ -30,14 +30,14 @@
           ]
       },
       "size": {
-          "type": "integer",
+          "type": ["string", "number", "integer"],
           "default": 0,
           "title": "The size Schema",
           "examples": [
               20
           ]
       },
-      "codeColor": {
+      "dark": {
           "type": "string",
           "default": "",
           "title": "The codeColor Schema",
@@ -45,7 +45,7 @@
               "000000"
           ]
       },
-      "bgColor": {
+      "light": {
           "type": "string",
           "default": "",
           "title": "The bgColor Schema",
@@ -53,7 +53,7 @@
               "ffffff"
           ]
       },
-      "img": {
+      "centerImageUrl": {
           "type": "string",
           "default": "",
           "title": "The img Schema",
@@ -61,8 +61,8 @@
               "https://cdn-icons-png.flaticon.com/512/1389/1389234.png"
           ]
       },
-      "imgRatio": {
-          "type": "number",
+      "centerImageSizeRatio": {
+          "type": ["string", "number", "integer"],
           "default": 0.0,
           "title": "The imgRatio Schema",
           "examples": [
@@ -79,14 +79,13 @@
       }
   },
   "examples": [{
-      "link": "hello world",
-      "format": "png",
+      "text": "hello world",
       "margin": 4,
       "size": 20,
-      "codeColor": "000000",
-      "bgColor": "ffffff",
-      "img": "https://cdn-icons-png.flaticon.com/512/1389/1389234.png",
-      "imgRatio": 0.3,
+      "dark": "000000",
+      "light": "ffffff",
+      "centerImageUrl": "https://cdn-icons-png.flaticon.com/512/1389/1389234.png",
+      "centerImageSizeRatio": 0.3,
       "description": "blablabla"
   }]
 }

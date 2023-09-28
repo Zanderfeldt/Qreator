@@ -1,0 +1,47 @@
+/* Home.css */
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.home-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.Home {
+  text-align: center;
+  flex-direction: column; 
+  margin: 120px auto;
+}
+
+.Home h1 {
+  font-size: 3rem;
+  font-weight: bold;
+  margin-top: 2px;
+}
+
+.Home p {
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+}
+
+.Home-buttons {
+  display: flex;
+  justify-content: center; 
+  margin-top: 20px;
+}
+
+.Home-buttons a {
+  margin: 0 4px;
+  padding: 6px 10px;
+  font-size: 0.8rem;
+  text-decoration: none;
+  color: #fff;
+  background-color: #62865d;
+  border-radius: 1px;
+}
+

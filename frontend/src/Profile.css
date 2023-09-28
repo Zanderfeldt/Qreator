@@ -1,6 +1,6 @@
-/* LogInForm.css */
+/* SignUpForm.css */
 
-.login-card {
+.profile {
   background-color: #ffffff62 ;
   border-radius: 10px;
   border: solid rgba(39, 35, 33, 0.192) 0.5px;
@@ -12,25 +12,34 @@
   
 }
 
-.login-card h2 {
-  color: #333;
+.profile h2 {
+  color: #000000;
   font-size: 24px;
   margin-bottom: 10px;
+  margin-top: 5px;
 }
 
-
-.login-card input {
+.profile input {
   width: 80%;
   padding: 2px;
-  margin: 8px 0;
+  margin: 4px 0;
   border: 1px solid #ccc;
   border-radius: 4px;
-  font-size: 12px;
+  font-size: 14px;
   height: 25px;
   font-family: 'Mooli', sans-serif;
 }
 
-.login-card button {
+.profile label {
+  display: block; 
+  margin-top: 1px;
+  font-size: 12px;
+  font-weight: bold; 
+  text-align: center;
+  color: #25571e; 
+}
+
+.profile button {
   background-color: #62865d;
   color: #fff;
   padding: 5px 10px;
@@ -40,9 +49,8 @@
   font-size: 16px;
   margin-top: 10px;
   font-family: 'Mooli', sans-serif;
-  
 }
 
-.login-card button:hover {
+.profile button:hover {
   background-color: #70dd5a;
 }

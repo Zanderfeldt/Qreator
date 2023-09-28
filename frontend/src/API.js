@@ -1,5 +1,5 @@
 import axios from "axios";
-import { deleteUserCode } from "../../backend/models/user";
+
 
 const BASE_URL = process.env.REACT_APP_BASE_URL || "http://localhost:3001";
 
@@ -30,14 +30,28 @@ class QreatorApi {
 
   //SIGN UP
   static async register(data) {
-    let res = await this.request('auth/register', data, 'post');
-    return res.token;
+    try {
+      let res = await this.request('auth/register', data, 'post');
+      return {success: true,
+              token: res.token}
+    } catch (err) {
+      return {success: false,
+              message: "Password does not meet minimum length of 5"}
+    }
+    
+    // FIX ERROR HERE
   }
 
   //LOG IN
   static async login(data) {
-    let res = await this.request('auth/token', data, 'post');
-    return res.token;
+    try {
+      let res = await this.request('auth/token', data, 'post');
+      return {success: true,
+              token: res.token};
+    } catch (err) {
+      return {success: false,
+              message: err[0]}
+    }
   }
 
   //GET USER
@@ -58,6 +72,12 @@ class QreatorApi {
     return res.code;
   }
 
+  //POST and SAVE NEW USER CODE
+  static async saveUserCode(userId, data) {
+    let res = await this.request(`users/${userId}/codes`, data, 'post');
+    return res.code;
+  }
+
   //UPDATE(POST/PATCH) USER CODE
   static async updateUserCode(userId, codeId, data) {
     let res = await this.request(`users/${userId}/${codeId}`, data, 'patch');
@@ -68,6 +88,18 @@ class QreatorApi {
   static async deleteUserCode(userId, codeId) {
     let res = await this.request(`users/${userId}/${codeId}`, {}, "delete");
     return res;
+  }
+
+  //CREATE (POST) NEW CODE GENERATED FROM API
+  static async createCode(data) {
+    let res = await this.request("create", data, 'post');
+    return res;
+  }
+
+  //UPDATE USER PROFILE INFO
+  static async saveProfile(userId, data) {
+    let res = await this.request(`users/${userId}`, data, "patch");
+    return res.user;
   }
 }
 

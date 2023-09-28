@@ -3,6 +3,11 @@
   "$id": "http://example.com/example.json",
   "type": "object",
   "properties": {
+    "username": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 30
+    },
     "password": {
       "type": "string",
       "minLength": 5,
@@ -26,5 +31,5 @@
     }
   },
   "additionalProperties": false,
-  "required": []
+  "required": ["password"]
 }

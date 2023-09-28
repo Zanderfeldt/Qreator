@@ -1,0 +1,54 @@
+/* Styling for the QRCode container */
+.qrCode-container {
+  position: relative;
+  transition: opacity 0.3s;
+}
+
+.qrCode-container:hover {
+  opacity: 0.8;
+}
+
+
+.qrCode-description {
+  margin-top: 6px;
+  margin-bottom: 3px;
+  text-align: center;
+  font-size: 14px;
+  font-family: 'Play', sans-serif;
+}
+
+
+.qrCode-actions {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: transparent; 
+  border: none; 
+  padding: 5px 10px;
+  text-align: center;
+  opacity: 0;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+
+.qrCode-container:hover .qrCode-actions {
+  opacity: 1;
+}
+
+/* Styling for the "Download" button */
+.qrCode-actions button {
+  background-color: #62865d;
+  color: #fff; 
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  margin-top: 5px;
+  border-radius: 3px;
+  transition: background-color 0.3s;
+  font-family: 'Play', sans-serif;
+}
+
+.qrCode-actions button:hover {
+  background-color:#4eb439;
+}

@@ -13,13 +13,18 @@ function SignUpForm({register}) {
   }
 
   const [formData, setFormData] = useState(INITIAL_STATE);
+  const [showAlert, setShowAlert] = useState('');
   const history = useHistory();
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
-    register(formData);
-    setFormData(INITIAL_STATE);
-    history.push('/');
+    let result = await register(formData);
+    if (result.success) {
+      setFormData(INITIAL_STATE);
+      history.push('/');
+    } else {
+      setShowAlert(result.message);
+    }
   };
 
   const handleChange = e => {
@@ -35,6 +40,7 @@ function SignUpForm({register}) {
   return (
     <div className='signup-card'>
       <h2>Sign Up</h2>
+      <small style={{color: 'red'}}>{showAlert}</small>
       <form onSubmit={handleSubmit}>
         <input
           id='username'

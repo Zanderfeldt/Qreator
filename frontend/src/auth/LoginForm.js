@@ -10,13 +10,19 @@ function LoginForm({login}) {
   }
 
   const [formData, setFormData] = useState(INITIAL_STATE);
+  const [showAlert, setShowAlert] = useState('');
   const history = useHistory();
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
-    login(formData);
-    setFormData(INITIAL_STATE);
-    history.push('/');
+    let result = await login(formData);
+    if (result.success) {
+      setFormData(INITIAL_STATE);
+      history.push('/');
+    } else {
+      setShowAlert(result.message);
+    }
+    
   };
 
   const handleChange = e => {
@@ -32,6 +38,7 @@ function LoginForm({login}) {
   return (
     <div className='login-card'>
       <h2>Log In</h2>
+      <small style={{color: 'red'}}>{showAlert}</small>
       <form onSubmit={handleSubmit}>
         <input
           id='username'

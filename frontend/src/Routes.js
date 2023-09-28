@@ -3,10 +3,16 @@ import QreatorApi from './API';
 import NavBar from './nav/NavBar';
 import LoginForm from './auth/LoginForm';
 import SignUpForm from './auth/SignUpForm';
+import NewCodeForm from './NewCodeForm';
+import Home from './Home';
+import Profile from './Profile';
+import QrCodeList from './QRCodeList';
+import QrCodeEdit from './QRCodeEdit';
 import UserContext from './auth/UserContext';
 import { BrowserRouter, Route, Redirect, Switch } from "react-router-dom";
 import useLocalStorage from "./hooks/useLocalStorage";
-
+import PrivateRoute from './nav/PrivateRoute';
+import PublicRoute from './nav/PublicRoute';
 import jwt_decode from 'jwt-decode';
 export const TOKEN_STORAGE_ID = "qreator-token";
 
@@ -43,14 +49,21 @@ useEffect(() => {
 }, [token]);
 
 const register = async (data) => {
-  let token = await QreatorApi.register(data);
-  setToken(token);    
+  let result = await QreatorApi.register(data);
+  if(result.success) {
+    setToken(result.token);
+  }
+  return result;
 }
 
 const login = async (data) => {
-  let token = await QreatorApi.login(data);
-  setToken(token); 
+  let result = await QreatorApi.login(data);
+  if (result.success) {
+    setToken(result.token);
+  }
+  return result; 
 }
+
 
 const logout = () => {
   setToken(null);
@@ -66,15 +79,27 @@ return (
     <UserContext.Provider value={{currUser, setCurrUser}}>
     <NavBar logout={logout} />
     <Switch>
-      {/* <Route exact path="/">
+      <Route exact path="/">
         <Home />
-      </Route> */}
-      <Route exact path="/login">
+      </Route>
+      <PrivateRoute exact path="/create">
+        <NewCodeForm />
+      </PrivateRoute>
+      <PrivateRoute exact path="/codes">
+        <QrCodeList />
+      </PrivateRoute>
+      <PrivateRoute exact path="/edit/:codeId">
+        <QrCodeEdit />
+      </PrivateRoute>
+      <PublicRoute exact path="/login">
         <LoginForm login={login}/>
-      </Route>
-      <Route exact path="/signup">
+      </PublicRoute>
+      <PublicRoute exact path="/signup">
         <SignUpForm register={register}/>
-      </Route>
+      </PublicRoute>
+      <PrivateRoute exact path="/profile">
+        <Profile />
+      </PrivateRoute>
     <Redirect to="/" />
     </Switch>
     </UserContext.Provider>

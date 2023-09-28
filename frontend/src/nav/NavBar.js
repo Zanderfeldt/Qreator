@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import "./NavBar.css";
 import { NavLink, Link } from "react-router-dom";
 import UserContext from "../auth/UserContext";
+import logo from "../codeIcon.png";
 
 function NavBar({logout}) {
   const { currUser } = useContext(UserContext);
@@ -13,6 +14,12 @@ function NavBar({logout}) {
           <NavLink exact to="/">
             QReator
           </NavLink>
+          <img src={logo} 
+              alt="logo" 
+              style={{width: '20px',
+                      height: '20px', 
+                      backgroundColor: 'white',
+                      marginLeft: '8px'}}></img>
         </div>
   
         <div className="navbar-links">
@@ -33,6 +40,12 @@ function NavBar({logout}) {
           <NavLink exact to="/">
             QReator
           </NavLink>
+          <img src={logo} 
+              alt="logo" 
+              style={{width: '20px',
+                      height: '20px', 
+                      backgroundColor: 'white',
+                      marginLeft: '8px'}}></img>
         </div>  
         <div className="navbar-links">          
           <NavLink to="/signup">Sign Up</NavLink>  

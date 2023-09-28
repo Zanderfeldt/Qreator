@@ -1,0 +1,109 @@
+.newCodeForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  max-width: 800px;
+  margin: 80px auto;
+  border-radius: 10px;
+  border: solid rgba(39, 35, 33, 0.192) 0.5px;
+  background-color: #ffffff62 ;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.295);
+  padding-bottom: 20px;
+}
+
+.newCodeForm h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  width: 100%;
+  text-align: center;
+  color: #000000;
+}
+
+.newCodeForm form {
+  display: inline-block;
+  width: 100%; 
+  max-width: 100%; 
+}
+
+.newCodeForm .input-columns {
+  display: inline-block;
+  width: calc(30% - 10px);
+  margin: 0 5px; 
+  vertical-align: top; 
+  text-align: center;
+}
+
+
+.newCodeForm label {
+  display: block;
+  margin-top: 1px;
+  font-size: 12px;
+  font-weight: bold;
+  color: #25571e;
+  text-align: center; 
+}
+
+.newCodeForm input {
+  padding: 3px;
+  margin: 4px auto; 
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+  font-family: 'Mooli', sans-serif;
+  width: 90%;
+  max-width: 250px; 
+}
+
+.newCodeForm .preview-button-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.preview-btn {
+  background-color: #62865d;
+  color: #fff;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 1px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 10px;
+  font-family: 'Mooli', sans-serif;
+  width: 90%; 
+  max-width: 250px; 
+}
+
+.save-btn {
+  background-color: #62865d;
+  border: none;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 1px;
+  margin-top: 5px;
+}
+
+.newCodeForm button:hover {
+  background-color: #70dd5a;
+}
+
+.newCodeForm button:focus {
+  outline: none;
+}
+
+.form-codeContainer {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 8px;
+  text-align: center;
+}
+
+.form-codeContainer img {
+  width: 200px;
+  height: 200px;
+  object-fit: contain;
+  margin-top: 10px;
+}

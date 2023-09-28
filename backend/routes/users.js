@@ -5,11 +5,16 @@
 const express = require("express");
 const jsonschema = require("jsonschema");
 const { ensureCorrectUser } = require("../middleware/auth");
-const { BadRequestError } = require("../expressError");
+const {
+  NotFoundError,
+  BadRequestError,
+  UnauthorizedError,
+} = require("../expressError");
 const User = require("../models/user");
 const { createToken } = require("../helpers/tokens");
 const codeSaveSchema = require("../schemas/codeSaveSchema.json");
 const codeUpdateSchema = require("../schemas/codeUpdateSchema.json");
+const userUpdateSchema = require("../schemas/userUpdate.json");
 const router = express.Router({ mergeParams: true });
 
 /** GET /[userId] => { user }
@@ -29,9 +34,40 @@ router.get("/:userId", ensureCorrectUser, async function (req, res, next) {
   }
 });
 
+/** PATCH /[userId]=> { user }
+ *  
+ * Updates the user profile
+ * Returns { username, firstName, lastName, email } 
+ *  
+ * Authorization required: same user-as-:userId
+ **/
+
+router.patch("/:userId", ensureCorrectUser, async function (req, res, next) {
+  try {
+    try {
+      await User.passwordCheck(+req.params.userId, req.body.password);
+    } catch (error) {
+      // Handle the invalid password error here
+      if (error instanceof UnauthorizedError) {
+        return res.status(401).json({ error: "Invalid password" });
+      }
+      throw error;
+    }
+    const validator = jsonschema.validate(req.body, userUpdateSchema);
+    if (!validator.valid) {
+      const errs = validator.errors.map(e => e.stack);
+      throw new BadRequestError(errs);
+    }
+    const user = await User.updateUser(+req.params.userId, req.body);
+    return res.json({ user });
+  } catch (err) {
+    return next(err);
+  }
+});
+
 /** GET /[userId]/codes => { codes }
  *
- * Returns { id, link, format, margin, size, codeColoe, bgColor, img, imgRatio,
+ * Returns { id, link, format, margin, size, codeColor, bgColor, img, imgRatio,
  *          description, lasEdited, url } for all user's QR codes
  *  
  * Authorization required: same user-as-:username
