@@ -12,10 +12,15 @@ function Home() {
       <img src={logo} alt="logo" style={{width: "150px"}}></img>
       <h1>QReator</h1>
       <p>Design your own QR Codes in one, convenient place.</p>
-      { currUser ? 
+      { currUser ?
+      <div> 
       <h2>
         Welcome Back, {currUser.firstName || currUser.username}! 
       </h2>
+      <div className="Home-buttons">
+      <Link to="/create" className="Home-buttons signup">Start Qreating</Link>
+      </div>
+      </div>
       : (<div className="Home-buttons">
       <Link to="/signup" className="Home-buttons signup">Sign Up</Link>
       <Link to="/login" className="Home-buttons login">Log In</Link>

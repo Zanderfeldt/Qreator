@@ -1,6 +1,6 @@
 
 .modal {
-  position: absolute;
+  position: relative;
   width: 200px;
   color: rgb(149, 120, 218);
   border-radius: 4px;

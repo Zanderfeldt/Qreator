@@ -1,9 +1,10 @@
 function parseQueryString(url) {
   // Extract the query string part from the URL
   const queryString = url.split('?')[1];
-
+  
+// Return an empty object if there's no query string
   if (!queryString) {
-    return {}; // Return an empty object if there's no query string
+    return {}; 
   }
 
   // Split the query string into key-value pairs
