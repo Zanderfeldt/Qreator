@@ -1,4 +1,5 @@
 # QReator
+This website provides users with a streamlined and easy-to-use method for customizing, saving, downloading, and editing their own QR Codes. The content of the QR Codes can be any URL or string. Users also have the ability to overlay an image of their choice, making this a perfect tool for personal branding/marketing.
 
 ## The Tech Stack:
 - JavaScript
