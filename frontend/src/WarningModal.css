@@ -1,11 +1,10 @@
-
 .modal {
-  position: relative;
+  position: absolute; 
   width: 200px;
-  color: rgb(149, 120, 218);
-  border-radius: 4px;
+  color: #185fc9;
   font-size: smaller;
   text-align: center;
-  
+  left: 115%; 
+  top: 30%; 
+  transform: translateX(10px); 
 }
-

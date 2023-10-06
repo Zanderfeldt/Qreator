@@ -81,6 +81,7 @@ function NewCodeForm() {
       width={200} 
       height={200} 
       description={formData.description}/>
+      {showModal && <WarningModal closeModal={closeModal}/>}
     </div>
     <form onSubmit={handleSubmit}>
       <div className='input-columns'>       
@@ -122,7 +123,7 @@ function NewCodeForm() {
           value={formData.centerImageUrl}
           onChange={handleChange}
         />
-        <label htmlFor="centerImageSizeRatio">- Image Size -</label>
+        <label htmlFor="centerImageSizeRatio">- Image Size (Ratio from 0 to 1) -</label>
         <input 
           id='centerImageSizeRatio'
           name='centerImageSizeRatio'
@@ -151,10 +152,11 @@ function NewCodeForm() {
         <div className='preview-button-container'>
           <button className='preview-btn'>Preview</button>
         </div>
+        <p className='preview-btn-msg'>Preview Your Changes Before Saving!</p>
       </div>
     </form>
     {showSave &&(<button className='save-btn' onClick={handleSave}>Save Code</button>)}
-    {showModal && <WarningModal closeModal={closeModal}/>}
+   
   </div>
   
   )

@@ -9,6 +9,7 @@ import './QRCodeList.css';
 function QrCodeList() {
   const { currUser } = useContext(UserContext);
   const [qrCodes, setQrCodes] = useState([]);
+  const [displayQrCodes, setDisplayQrCodes] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [showAlert, setShowAlert] = useState(false);
   
@@ -17,7 +18,10 @@ function QrCodeList() {
     async function getQrCodes() {
       try {
         let codeRes = await QreatorApi.getUserCodes(currUser.id);
+        //SORT BY 
+        //make temp variable and set to state
         setQrCodes(codeRes);
+        setDisplayQrCodes(codeRes);
         setIsLoading(false);
       } catch (e) {
         console.error(e);
@@ -28,7 +32,7 @@ function QrCodeList() {
       setShowAlert(false);
     }
   }, [currUser]);
-
+  console.log(displayQrCodes);
   if (isLoading) {
     return <p>Loading &hellip;</p>
   }
@@ -52,7 +56,7 @@ function QrCodeList() {
       </div>
       {showAlert && <Alert message='QR Code Deleted!'/>}
       <div className='code-list-grid'>
-        {qrCodes.map(q => (
+        {displayQrCodes.map(q => (
           <div className='codeContainer' key={q.id}>
             <QRCode 
             url={q.url} 

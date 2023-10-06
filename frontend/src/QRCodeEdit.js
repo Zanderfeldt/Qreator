@@ -116,16 +116,17 @@ function QrCodeEdit() {
   
   return (
     <div className='newCodeForm'>
-      <h2>Build your own QR Code</h2>
-      <div className='form-codeContainer'>
-        {showAlert && <Alert message='QR Code Saved!'/>}
-        <QRCode 
-        url={code.url} 
-        width={200} 
-        height={200} 
-        description={formData.description}/>
-      </div>
-      <form onSubmit={handleSubmit}>
+    <h2>Build your own QR Code</h2>
+    <div className='form-codeContainer'>
+      {showAlert && <Alert message='QR Code Saved!'/>}
+      <QRCode 
+      url={code.url} 
+      width={200} 
+      height={200} 
+      description={formData.description}/>
+      {showModal && <WarningModal closeModal={closeModal}/>}
+    </div>
+    <form onSubmit={handleSubmit}>
       <div className='input-columns'>       
         <label htmlFor="text">- QR Data (Text or URL) -</label>
         <input 
@@ -148,6 +149,33 @@ function QrCodeEdit() {
           value={formData.size}
           onChange={handleChange}
         />
+      </div>
+      <div className='input-columns'> 
+        <label htmlFor="description">- Description -</label>
+        <input 
+          id='description'
+          name='description'
+          value={formData.description}
+          onChange={handleChange}
+          maxLength={50}
+        />
+        <label htmlFor="centerImageUrl">- Image/Logo (optional) -</label>
+        <input 
+          id='centerImageUrl'
+          name='centerImageUrl'
+          value={formData.centerImageUrl}
+          onChange={handleChange}
+        />
+        <label htmlFor="centerImageSizeRatio">- Image Size (Ratio from 0 to 1) -</label>
+        <input 
+          id='centerImageSizeRatio'
+          name='centerImageSizeRatio'
+          value={formData.centerImageSizeRatio}
+          onChange={handleChange}
+          onClick={openModal}
+        />
+      </div>
+      <div className='input-columns'> 
         <label htmlFor="dark">- Color (foreground) -</label>
         <input 
           id='dark'
@@ -164,35 +192,16 @@ function QrCodeEdit() {
           value={formData.light}
           onChange={handleChange}
         />
-        <label htmlFor="centerImageUrl">- Image/Logo (optional) -</label>
-        <input 
-          id='centerImageUrl'
-          name='centerImageUrl'
-          value={formData.centerImageUrl}
-          onChange={handleChange}
-        />
-        <label htmlFor="centerImageSizeRatio">- Image Size -</label>
-        <input 
-          id='centerImageSizeRatio'
-          name='centerImageSizeRatio'
-          value={formData.centerImageSizeRatio}
-          onChange={handleChange}
-          onClick={openModal}
-        />
-        <label htmlFor="description">- Description -</label>
-        <input 
-          id='description'
-          name='description'
-          value={formData.description}
-          onChange={handleChange}
-          maxLength={50}
-        />
-        <button>Preview</button>
+        <div className='preview-button-container'>
+          <button className='preview-btn'>Preview</button>
         </div>
-      </form>
-      {showSave &&(<button className='save-btn' onClick={handleSave}>Update Code</button>)}
-      {showModal && <WarningModal closeModal={closeModal}/>}
-    </div>
+        <p className='preview-btn-msg'>Preview Your Changes Before Saving!</p>
+      </div>
+    </form>
+    {showSave &&(<button className='save-btn' onClick={handleSave}>Save Code</button>)}
+   
+  </div>
+  
   )
 }
 
