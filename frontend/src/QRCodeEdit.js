@@ -199,9 +199,7 @@ function QrCodeEdit() {
       </div>
     </form>
     {showSave &&(<button className='save-btn' onClick={handleSave}>Save Code</button>)}
-   
-  </div>
-  
+  </div> 
   )
 }
 

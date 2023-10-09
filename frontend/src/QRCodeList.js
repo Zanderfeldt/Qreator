@@ -14,7 +14,7 @@ function QrCodeList() {
   const [showAlert, setShowAlert] = useState(false);
   
   useEffect(() => {
-
+    //initial call to retrieve user's QR Codes
     async function getQrCodes() {
       try {
         let codeRes = await QreatorApi.getUserCodes(currUser.id);
@@ -32,11 +32,12 @@ function QrCodeList() {
       setShowAlert(false);
     }
   }, [currUser]);
-  console.log(displayQrCodes);
+  
   if (isLoading) {
     return <p>Loading &hellip;</p>
   }
 
+  //Delete a Code
   const deleteCode = async(codeId) => {
     let res = await QreatorApi.deleteUserCode(currUser.id, codeId);
     if (res) {
@@ -45,15 +46,55 @@ function QrCodeList() {
       setShowAlert(true);
       setTimeout(() => {
         setShowAlert(false);
-      }, 3000); // 3000 milliseconds (3 seconds)
+      }, 3000); 
     }
   }
+  
+  //Sort Codes by Date Desc
+  function sortByLastEditedDescending(arr) {
+    const sortedArray = [...arr]; 
+    sortedArray.sort((a, b) => {
+      const dateA = new Date(a.lastEdited);
+      const dateB = new Date(b.lastEdited);
+      return dateB - dateA;
+    });
+    setDisplayQrCodes(sortedArray); 
+  }
+
+  //Sort Codes by Date Asc
+  function sortByLastEditedAscending(arr) {
+    const sortedArray = [...arr]; 
+    sortedArray.sort((a, b) => {
+      const dateA = new Date(a.lastEdited);
+      const dateB = new Date(b.lastEdited);
+      return dateA - dateB;
+    });
+    setDisplayQrCodes(sortedArray); 
+  }
+
+  // Sort Codes by Description in Ascending Order
+  function sortByDescriptionAscending(arr) {
+    const sortedArray = [...arr]; 
+    sortedArray.sort((a, b) => {
+      const descriptionA = a.description.toLowerCase(); 
+      const descriptionB = b.description.toLowerCase();
+      return descriptionA.localeCompare(descriptionB);
+    });
+    setDisplayQrCodes(sortedArray); 
+  }
+
 
   return (
     <div className='code-list'>
       <div class="heading-container">
         <h2>Your QR Codes</h2>
+        <div className="sort-buttons-container">
+        <p>Sort by:</p>
+        <button className='sort-btn' onClick={() => sortByLastEditedDescending(qrCodes)}>Date Desc</button>
+        <button className='sort-btn' onClick={() => sortByLastEditedAscending(qrCodes)}>Date Asc</button>
+        <button className='sort-btn' onClick={() => sortByDescriptionAscending(qrCodes)}>Description</button>
       </div>
+    </div>
       {showAlert && <Alert message='QR Code Deleted!'/>}
       <div className='code-list-grid'>
         {displayQrCodes.map(q => (

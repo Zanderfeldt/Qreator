@@ -24,6 +24,7 @@
   border-radius: 10px;
   color: rgb(0, 0, 0);
   background-color: #ffffff62 ;
+  margin-bottom: 10px;
 }
 
 .codeContainer {
@@ -70,3 +71,25 @@
   background-color: #ffffff00;
 }
 
+.heading-container p {
+  margin-top: 0px;
+  margin-bottom: 2px;
+  margin-right: 5px;
+  font-size: 13px;
+}
+
+.sort-btn {
+  margin-left: 2px;
+  margin-right: 2px;
+  background-color: #62865d;
+  color: #fff;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 1px;
+}
+
+.sort-buttons-container {
+  display: flex;
+  align-items: center; 
+  justify-content: center;
+}
