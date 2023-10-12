@@ -34,6 +34,7 @@ function QRCode({ url, width, height, description = null }) {
       style={{ width: `${width}px` }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
+      data-testid='qr-code-container'
     >
       <div style={{ width: `${width}px`, height: `${height}px` }}>
         <img

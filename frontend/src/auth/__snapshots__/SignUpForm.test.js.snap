@@ -1,0 +1,54 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SignUpForm should match the snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="signup-card"
+  >
+    <h2>
+      Sign Up
+    </h2>
+    <small
+      style="color: red;"
+    />
+    <form>
+      <input
+        id="username"
+        name="username"
+        placeholder="Username"
+        value=""
+      />
+      <input
+        id="password"
+        name="password"
+        placeholder="Password"
+        type="password"
+        value=""
+      />
+      <input
+        id="firstName"
+        name="firstName"
+        placeholder="First Name"
+        value=""
+      />
+      <input
+        id="lastName"
+        name="lastName"
+        placeholder="Last Name"
+        value=""
+      />
+      <input
+        id="email"
+        name="email"
+        placeholder="E-mail"
+        value=""
+      />
+      <button
+        disabled=""
+      >
+        Submit
+      </button>
+    </form>
+  </div>
+</DocumentFragment>
+`;

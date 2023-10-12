@@ -86,7 +86,7 @@ function QrCodeList() {
 
   return (
     <div className='code-list'>
-      <div class="heading-container">
+      <div className="heading-container">
         <h2>Your QR Codes</h2>
         <div className="sort-buttons-container">
         <p>Sort by:</p>

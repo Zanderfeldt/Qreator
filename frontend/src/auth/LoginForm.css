@@ -46,3 +46,8 @@
 .login-card button:hover {
   background-color: #70dd5a;
 }
+
+.error-message {
+  color: red; /* Set text color to red */
+  font-size: 12px; /* Set font size to make it smaller */
+}

@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Home component matches snapshot 1`] = `
+<div>
+  <div
+    class="Home"
+  >
+    <img
+      alt="logo"
+      src="codeIcon.png"
+      style="width: 150px;"
+    />
+    <h1>
+      QReator
+    </h1>
+    <p>
+      Design your own QR Codes in one, convenient place.
+    </p>
+    <div>
+      <h2>
+        Welcome Back, 
+        !
+      </h2>
+      <div
+        class="Home-buttons"
+      >
+        <a
+          class="Home-buttons signup"
+          href="/create"
+        >
+          Start Qreating
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+`;
