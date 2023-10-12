@@ -14,6 +14,8 @@ import useLocalStorage from "./hooks/useLocalStorage";
 import PrivateRoute from './nav/PrivateRoute';
 import PublicRoute from './nav/PublicRoute';
 import jwt_decode from 'jwt-decode';
+
+
 export const TOKEN_STORAGE_ID = "qreator-token";
 
 function Routes () {
@@ -77,7 +79,7 @@ if (isLoading) {
 return (
   <BrowserRouter>
     <UserContext.Provider value={{currUser, setCurrUser}}>
-    <NavBar logout={logout} />
+    <NavBar logout={logout} />   
     <Switch>
       <Route exact path="/">
         <Home />
@@ -101,7 +103,7 @@ return (
         <Profile />
       </PrivateRoute>
     <Redirect to="/" />
-    </Switch>
+    </Switch> 
     </UserContext.Provider>
   </BrowserRouter>
 )
